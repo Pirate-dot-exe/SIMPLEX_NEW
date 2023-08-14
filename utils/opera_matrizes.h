@@ -29,6 +29,78 @@ std::vector<double> multiplicaMatrizes(
     std::vector<std::vector<double>> matriz, std::vector<double> vetor
 );
 
+std::vector<std::string> getXN(
+    std::vector<std::string> X, int corte
+){
+    std::vector<std::string> XN;
+    for (size_t i = 0; i < corte; i++){
+        XN.push_back(X[i]);
+    }
+    return XN;
+}
+std::vector<std::string> getXB(
+    std::vector<std::string> X, int corte
+){
+    std::vector<std::string> XB;
+    for (size_t i = 0; i < X.size(); i++){
+        if (i >= corte){
+            XB.push_back(X[i]);
+        }
+    }
+    return XB;
+}
+
+std::vector<double> getCtn(
+    std::vector<double> C, int corte
+){
+    std::vector<double> Ctn;
+    for (size_t i = 0; i < corte; i++){
+        Ctn.push_back(C[i]);
+    }
+    return Ctn;
+}
+std::vector<double> getCtb(
+    std::vector<double> C, int corte
+){
+    std::vector<double> Ctb;
+    for (size_t i = 0; i < C.size(); i++){
+        if (i >= corte){
+            Ctb.push_back(C[i]);
+        }
+    }
+    return Ctb;
+}
+
+std::vector<std::vector<double>> getMatrizN(
+    std::vector<std::vector<double>> matrizA, int corte
+){
+    std::vector<std::vector<double>> matrizN;
+    std::vector<double> linha;
+    for(size_t i = 0; i < matrizA.size(); i++){
+        for(size_t j = 0; j < corte; j++){
+            linha.push_back(matrizA[i][j]);
+        }
+        matrizN.push_back(linha);
+    }
+    return matrizN;
+}
+std::vector<std::vector<double>> getMatrizB(
+    std::vector<std::vector<double>> matrizA, int corte
+){
+    std::vector<std::vector<double>> matrizB;
+    std::vector<double> linha;
+    for(size_t i = 0; i < matrizA.size(); i++){
+        for(size_t j = 0; j < matrizA[i].size(); j++){
+            if (j >= corte){
+                linha.push_back(matrizA[i][j]);
+            }
+
+        }
+        matrizB.push_back(linha);
+    }
+    return matrizB;
+}
+
 double multiplica_vetores(
     std::vector<double> vetor1, std::vector<double> vetor2
 ){
@@ -111,83 +183,6 @@ std::vector<double> subtrai_vetores(std::vector<double> vetor1, std::vector<doub
     return vetor_resultante;
 }
 
-std::vector<std::string> separaVetor_acima(
-    std::vector<std::string> vetor, int corte
-){
-    std::vector<std::string> novo_vetor;
-    for (size_t i = 0; i < vetor.size(); i++){
-        if (i > corte){
-            novo_vetor.push_back(vetor[i]);
-        }
-    }
-    return novo_vetor;
-}
-std::vector<std::string> separaVetor_abaixo(
-    std::vector<std::string> vetor, int corte
-){
-    std::vector<std::string> novo_vetor;
-    for (size_t i = 0; i < corte; i++){
-        novo_vetor.push_back(vetor[i]);
-    }
-    return novo_vetor;
-}
-
-std::vector<double> separaVetor_acima(
-    std::vector<double> vetor, int corte
-){
-    std::vector<double> novo_vetor;
-    for (size_t i = 0; i < vetor.size(); i++){
-        if (i > corte){
-            novo_vetor.push_back(vetor[i]);
-        }
-    }
-    return novo_vetor;
-}
-std::vector<double> separaVetor_abaixo(
-    std::vector<double> vetor, int corte
-){
-    std::vector<double> novo_vetor;
-    for (size_t i = 0; i < corte; i++){
-        novo_vetor.push_back(vetor[i]);
-    }
-    return novo_vetor;
-}
-
-std::vector<std::vector<double>> separaMatriz_acima(
-    std::vector<std::vector<double>> matriz, int corte
-){
-    std::vector<std::vector<double>> subMatriz;
-    std::vector<double> novaLinha;
-    for(size_t i = 0; i < matriz.size(); i++){
-        for(size_t j = 0; j < matriz[i].size(); j++){
-            if(j >= corte){
-                novaLinha.push_back(matriz[i][j]);
-            }
-        }
-        if(!novaLinha.empty()){
-            subMatriz.push_back(novaLinha);
-        }
-        novaLinha.clear();
-    }
-    return subMatriz;
-}
-
-std::vector<std::vector<double>> separaMatriz_abaixo(
-    std::vector<std::vector<double>> matriz, int corte
-){
-    std::vector<std::vector<double>> subMatriz;
-    std::vector<double> novaLinha;
-    for(size_t i = 0; i < matriz.size(); i++){
-        for(size_t j = 0; j < corte; j++){
-            novaLinha.push_back(matriz[i][j]);
-        }
-        subMatriz.push_back(novaLinha);
-        novaLinha.clear();
-    }
-    return subMatriz;
-}
-
-
 std::vector<double> disjuncao_vetores(std::vector<double> vetor1, std::vector<double> vetor2){
     std::vector<double> vetor_resultante;
 
@@ -212,7 +207,7 @@ std::vector<std::string> disjuncao_vetores(std::vector<std::string> vetor1, std:
 }
 
 void gera_identidade(Tabela& tabela){
-    int tamanho = tabela.matrix_B.size();
+    int tamanho = tabela.matrizA.size();
     std::vector<double> linha;
     for (int i = 0; i < tamanho; i++){
         for (int j = 0; j < tamanho; j++){
@@ -227,18 +222,15 @@ void gera_identidade(Tabela& tabela){
     }
 }
 
-void checa_identidade_B(Tabela& tabela){   
-    for (size_t i = 0; i < tabela.matrix_B.size(); ++i) {
-        for (size_t j = 0; j < tabela.matrix_B[i].size(); ++j) {
-            if (tabela.matrix_B[i][j] == 1.0 && i != j) {
-                troca_coluna(tabela, tabela.matrix_B, i, j);
-                if(tabela.problema_artificial){
-                    troca_coluna(tabela, tabela.XA, tabela.XN.size()+i, tabela.XN.size()+j);
-                    troca_coluna(tabela, tabela.Cta, tabela.Ctn.size()+i, tabela.Ctn.size()+j);
-                }else{
-                    troca_coluna(tabela, tabela.X, tabela.XN.size()+i, tabela.XN.size()+j);
-                    troca_coluna(tabela, tabela.C, tabela.Ctn.size()+i, tabela.Ctn.size()+j);
-                }
+void converte_identidade(
+    Tabela& tabela, std::vector<std::vector<double>>& matriz
+){   
+    for (size_t i = 0; i < matriz.size(); ++i) {
+        for (size_t j = 0; j < matriz[i].size(); ++j) {
+            if (tabela.matrizA[i][j] == 1.0 && i != j) {
+                troca_coluna(tabela, matriz, i, j);
+                troca_coluna(tabela, tabela.X, tabela.X.size()+i, tabela.X.size()+j);
+                troca_coluna(tabela, tabela.C, tabela.C.size()+i, tabela.C.size()+j);
             }
         }
     }
@@ -288,35 +280,6 @@ void troca_coluna(
     for (int i = 0; i < matriz.size(); i++){
         std::swap(matriz[i][coluna_saida], matriz[i][coluna_entrada]);
     }
-}
-
-std::vector<double> concatena_vetores(
-    std::vector<double> vetor1, std::vector<double> vetor2
-){
-    vetor1.insert( vetor1.end(), vetor2.begin(), vetor2.end() );
-
-    return vetor1;
-}
-
-std::vector<std::string> concatena_vetores(
-    std::vector<std::string> vetor1, std::vector<std::string> vetor2
-){
-    vetor1.insert( vetor1.end(), vetor2.begin(), vetor2.end() );
-
-    return vetor1;
-}
-
-std::vector<std::vector<double>> concatena_matrizes(
-    std::vector<std::vector<double>> matriz1, std::vector<std::vector<double>> matriz2
-)
-{
-    std::vector<std::vector<double>> matriz_resultante;
-    for (int i = 0; i < matriz1.size(); i++){
-        matriz1[i].insert( matriz1[i].end(), matriz2[i].begin(), matriz2[i].end() );
-        matriz_resultante.push_back(matriz1[i]);
-    }
-
-    return matriz_resultante;
 }
 
 #endif

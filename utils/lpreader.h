@@ -93,8 +93,8 @@ Tabela lerArquivo(const std::string &nomeArquivo) {
                 }else if(std::regex_match(token, padraoCoeficiente)){
                     coeficiente = token;
                 }else if(std::regex_match(token, padraoVariavel)){
-                    tabela.XN.push_back(token);
-                    tabela.Ctn.push_back(
+                    tabela.X.push_back(token);
+                    tabela.C.push_back(
                         match_coeficiente(sinal, coeficiente)
                     );
                     sinal.clear();
@@ -137,7 +137,7 @@ Tabela lerArquivo(const std::string &nomeArquivo) {
             // Insere coeficientes na matriz N 
             // e garante que a nova linha estara vazia para proxima restrição
             if(!linhaRestricao.empty()){
-                tabela.matrix_N.push_back(linhaRestricao);
+                tabela.matrizA.push_back(linhaRestricao);
                 linhaRestricao.clear();
             }
         }else if (linha.find("Bounds") != std::string::npos){

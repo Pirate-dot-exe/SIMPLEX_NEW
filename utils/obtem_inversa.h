@@ -55,7 +55,6 @@ std::vector<std::vector<double>> calcula_inversa(
     zerarElementosAcimaDiagonal(matriz, identidade, tamanhoMatriz);
     zerarElementosAbaixoDiagonal(matriz, identidade, tamanhoMatriz);
 
-    std::cout << "CHECK! Matriz" << std::endl;
     for (size_t i = 0; i < matriz.size(); i++){
         for (size_t j = 0; j < matriz[i].size(); j++){
             std::cout << matriz[i][j] << " ";
