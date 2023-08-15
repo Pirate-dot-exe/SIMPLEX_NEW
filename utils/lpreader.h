@@ -46,7 +46,6 @@ std::vector<std::string> getTokens(const std::string &linha) {
 Tabela lerArquivo(const std::string &nomeArquivo) {
 
     Tabela tabela;
-
     std::ifstream arquivo(nomeArquivo);
 
     // Tratamento de falha na leitura

@@ -6,8 +6,8 @@
 #include <regex>
 
 #include "tabela.h"
-#include "opera_matrizes.h"
-#include "obtem_inversa.h"
+//#include "opera_matrizes.h"
+//#include "obtem_inversa.h"
 #include "exibicao.h"
 
 // Assinaturas de funções
@@ -32,7 +32,7 @@ void formalizar_tabela(Tabela& tabela){
             numVariaveisNBasicas++;
         }
     }
-    int num_var = numVariaveisNBasicas;
+    tabela.num_var = numVariaveisNBasicas;
 
     int linha = 0;
     int indice_limite = 0;
@@ -81,15 +81,11 @@ void formalizar_tabela(Tabela& tabela){
 }
 
 void artificializar(Tabela& tabela){
-
-    // Gera coluna de coeficientes e matriz temporarias para o problema artificial
-    int cta_size = tabela.C.size();
-    for (int i = 0; i < cta_size; i++){
-        tabela.C.push_back(0.0);
-        tabela.X.push_back(tabela.X[i]);
-    }
     
     // Artificializa o problema
+    for (size_t i = 0; i < tabela.C.size(); i++){
+        tabela.C[i] = 0.0;
+    }
     int linha = 0;
     for(std::string &limite : tabela.limites){
 
@@ -128,6 +124,7 @@ void artificializar(Tabela& tabela){
     }
 }
 
+/*
 void resolve_problema_artificial(Tabela& tabela){
 
     // Trecho responsável por obter todas as informações relevantes para
@@ -224,12 +221,13 @@ void resolve_problema_artificial(Tabela& tabela){
             matrizN = getMatrizN(tabela.matrizA, numVariaveisNBasicas);
 
 
-            /*
+            
             std::cout << "Step" << std::endl;
             int command;
             std::cin >> command;
-            */
+            
         }
     }
 }
+*/
 #endif

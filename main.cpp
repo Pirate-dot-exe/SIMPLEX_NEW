@@ -7,38 +7,38 @@
 #include <string>
 
 int main(){
-    //bool passo_a_passo = true;
-
     // Leitura do arquivo .lp
     std::string nomeArquivo = "C:/src/VSCode_Workspace/C/NewVersion_TrabSimplex/lista_problemas/exerc57.lp";
+    // Cria a instância da tabela
     Tabela tabela = lerArquivo(nomeArquivo);
+    gera_identidade(tabela);
 
-    exibeVetor_string(tabela.X, "X");
-    exibeMatriz_double(tabela.matrizA, "A");
-    exibeVetor_double(tabela.C, "C");
+    // Tabela Original do problema
+    if(tabela.passo_a_passo){
+        exibeTabela(tabela);
+    }
 
     // Transforma a função para a forma padrão
     formalizar_tabela(tabela);
-
-    exibeVetor_string(tabela.X);
-    exibeMatriz_double(tabela.matrizA);
-    exibeVetor_double(tabela.C);
-
-    // Se necessário, transforma a tabela em um problema artificial
-    if (tabela.problema_artificial){
-        std::cout << "Necessita Problema Artificial" << std::endl;
-        artificializar(tabela);
+    if(tabela.passo_a_passo){
+        std::cout << "Formaliza Tabela" << std::endl;
+        exibeTabela(tabela);
     }
 
-    exibeVetor_string(tabela.X);
-    exibeMatriz_double(tabela.matrizA);
-    exibeVetor_double(tabela.C);
-    // Cria a matriz identidade correspondente a matriz B
-    gera_identidade(tabela);
+    // Se necessário, transforma a tabela em um problema artificial
+    // Salva uma cópia da coluna C caso haja problema artificial que altera C
+    std::vector<double> C_copy = tabela.C;
+    if (tabela.problema_artificial){
+        artificializar(tabela);
+        if(tabela.passo_a_passo){
+            std::cout << "Necessita Problema Artificial" << std::endl;
+            exibeTabela(tabela);
+        }
+    }
     // Transforma a matriz B em matriz identidade para facilitar a manipulação
-    checa_identidade_B(tabela);
+    //checa_identidade_B(tabela);
 
-    resolve_problema_artificial(tabela);
+    //resolve_problema_artificial(tabela);
 
     while(tabela.problema){
         std::cout << std::endl;

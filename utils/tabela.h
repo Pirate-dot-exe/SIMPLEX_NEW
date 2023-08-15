@@ -5,8 +5,11 @@
 #include <iostream>
 #include <string>
 
+void gera_identidade(Tabela& tabela);
+
 struct Tabela
 {
+    bool passo_a_passo = true;
     bool problema = false;              // Verifica se o problema já foi resolvido
     bool problema_artificial = false;   // Verifica se o problema artificial já foi resolvido
     std::vector<bool> linha_artificial; // Verifica se as linhas precisarão de variaveis artificiais
@@ -24,14 +27,20 @@ struct Tabela
     std::vector<std::vector<double>> matriz_I;  // Matriz Identidade
 };
 
-#endif
-
-/*
-    std::cout << "Matriz A" << std::endl;
-    for (int i = 0; i < tabela.matrix_A.size(); i++){           // Linha de A
-        for (int j = 0; j < tabela.matrix_A[i].size(); j++){    // Coluna de N
-            std::cout << tabela.matrix_A[i][j] << " ";
+void gera_identidade(Tabela& tabela){
+    int tamanho = tabela.matrizA.size();
+    std::vector<double> linha;
+    for (int i = 0; i < tamanho; i++){
+        for (int j = 0; j < tamanho; j++){
+            if (i == j){
+                linha.push_back(1.0);
+            }else{
+                linha.push_back(0.0);
+            }
         }
-        std::cout << std::endl;
+        tabela.matriz_I.push_back(linha);
+        linha.clear();
     }
-*/
+}
+
+#endif

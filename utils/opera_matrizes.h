@@ -8,8 +8,6 @@
 #include <algorithm>
 
 // Assinaturas de funções
-void gera_identidade(Tabela& tabela);
-// Manipula a matriz B e vetores relacionado para que fique uma matriz identidade
 void checa_identidade_B(Tabela& tabela);
 // Conjunto de funções para trocar elementos/colunas de vetores/matrizes
 void troca_coluna(
@@ -28,78 +26,6 @@ std::vector<double> subtrai_vetores(std::vector<double> vetor1, std::vector<doub
 std::vector<double> multiplicaMatrizes(
     std::vector<std::vector<double>> matriz, std::vector<double> vetor
 );
-
-std::vector<std::string> getXN(
-    std::vector<std::string> X, int corte
-){
-    std::vector<std::string> XN;
-    for (size_t i = 0; i < corte; i++){
-        XN.push_back(X[i]);
-    }
-    return XN;
-}
-std::vector<std::string> getXB(
-    std::vector<std::string> X, int corte
-){
-    std::vector<std::string> XB;
-    for (size_t i = 0; i < X.size(); i++){
-        if (i >= corte){
-            XB.push_back(X[i]);
-        }
-    }
-    return XB;
-}
-
-std::vector<double> getCtn(
-    std::vector<double> C, int corte
-){
-    std::vector<double> Ctn;
-    for (size_t i = 0; i < corte; i++){
-        Ctn.push_back(C[i]);
-    }
-    return Ctn;
-}
-std::vector<double> getCtb(
-    std::vector<double> C, int corte
-){
-    std::vector<double> Ctb;
-    for (size_t i = 0; i < C.size(); i++){
-        if (i >= corte){
-            Ctb.push_back(C[i]);
-        }
-    }
-    return Ctb;
-}
-
-std::vector<std::vector<double>> getMatrizN(
-    std::vector<std::vector<double>> matrizA, int corte
-){
-    std::vector<std::vector<double>> matrizN;
-    std::vector<double> linha;
-    for(size_t i = 0; i < matrizA.size(); i++){
-        for(size_t j = 0; j < corte; j++){
-            linha.push_back(matrizA[i][j]);
-        }
-        matrizN.push_back(linha);
-    }
-    return matrizN;
-}
-std::vector<std::vector<double>> getMatrizB(
-    std::vector<std::vector<double>> matrizA, int corte
-){
-    std::vector<std::vector<double>> matrizB;
-    std::vector<double> linha;
-    for(size_t i = 0; i < matrizA.size(); i++){
-        for(size_t j = 0; j < matrizA[i].size(); j++){
-            if (j >= corte){
-                linha.push_back(matrizA[i][j]);
-            }
-
-        }
-        matrizB.push_back(linha);
-    }
-    return matrizB;
-}
 
 double multiplica_vetores(
     std::vector<double> vetor1, std::vector<double> vetor2
@@ -164,62 +90,6 @@ std::vector<double> obtem_coluna(std::vector<std::vector<double>> matriz, int in
         }
     }
     return coluna;
-}
-
-std::vector<double> subtrai_vetores(std::vector<double> vetor1, std::vector<double> vetor2){
-    std::vector<double> vetor_resultante;
-    /*
-    for (double v1 : vetor1){
-        std::cout << v1 << " ";
-    }
-    std::cout << std::endl;
-    for (double v2 : vetor2){
-        std::cout << v2 << " ";
-    }
-    */
-    for (size_t i = 0; i < vetor1.size(); i++){
-        vetor_resultante.push_back(vetor1[i] - vetor2[i]);
-    }
-    return vetor_resultante;
-}
-
-std::vector<double> disjuncao_vetores(std::vector<double> vetor1, std::vector<double> vetor2){
-    std::vector<double> vetor_resultante;
-
-    for (double elemento : vetor1) {
-        if (std::find(vetor2.begin(), vetor2.end(), elemento) == vetor2.end()) {
-            vetor_resultante.push_back(elemento);
-        }
-    }
-
-    return vetor_resultante;
-}
-std::vector<std::string> disjuncao_vetores(std::vector<std::string> vetor1, std::vector<std::string> vetor2){
-    std::vector<std::string> vetor_resultante;
-
-    for (std::string elemento : vetor1) {
-        if (std::find(vetor2.begin(), vetor2.end(), elemento) == vetor2.end()) {
-            vetor_resultante.push_back(elemento);
-        }
-    }
-
-    return vetor_resultante;
-}
-
-void gera_identidade(Tabela& tabela){
-    int tamanho = tabela.matrizA.size();
-    std::vector<double> linha;
-    for (int i = 0; i < tamanho; i++){
-        for (int j = 0; j < tamanho; j++){
-            if (i == j){
-                linha.push_back(1.0);
-            }else{
-                linha.push_back(0.0);
-            }
-        }
-        tabela.matriz_I.push_back(linha);
-        linha.clear();
-    }
 }
 
 void converte_identidade(
